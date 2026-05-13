@@ -1,0 +1,637 @@
+<!DOCTYPE html>
+<html lang="fr">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Kit Pédagogique — Aurélie Louisin</title>
+<style>
+*, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+:root {
+  --bg: #faf9f7; --bg2: #f2f0ec; --bg3: #e8e5df;
+  --text: #1a1816; --text2: #6b6560; --text3: #9e9890;
+  --border: rgba(0,0,0,0.09); --border2: rgba(0,0,0,0.16); --border3: rgba(0,0,0,0.26);
+  --radius: 10px; --radius-lg: 14px; --radius-pill: 999px;
+  --aurana: #c8a97e; --aurana-dark: #8b6f4e;
+}
+body { font-family: 'Segoe UI', system-ui, -apple-system, sans-serif; background: var(--bg); color: var(--text); min-height: 100vh; line-height: 1.6; }
+
+/* HEADER */
+header { background: #fff; border-bottom: 0.5px solid var(--border2); padding: 1rem 2rem; display: flex; align-items: center; justify-content: space-between; position: sticky; top: 0; z-index: 20; gap: 1rem; flex-wrap: wrap; }
+.header-left { display: flex; align-items: center; gap: 12px; }
+.logo-badge { width: 40px; height: 40px; border-radius: var(--radius); background: var(--aurana); display: flex; align-items: center; justify-content: center; font-weight: 700; font-size: 15px; color: #fff; flex-shrink: 0; }
+.header-text h1 { font-size: 15px; font-weight: 600; }
+.header-text p { font-size: 11px; color: var(--text2); }
+.nav-tabs { display: flex; gap: 4px; }
+.nav-tab { padding: 6px 14px; border: none; border-radius: var(--radius-pill); font-size: 13px; cursor: pointer; background: transparent; color: var(--text2); font-family: inherit; transition: all 0.15s; }
+.nav-tab:hover { background: var(--bg2); color: var(--text); }
+.nav-tab.active { background: var(--aurana); color: #fff; font-weight: 500; }
+
+.main { max-width: 880px; margin: 0 auto; padding: 2rem 1.5rem 5rem; }
+
+/* KIT TABS */
+.kit-tabs { display: flex; gap: 8px; flex-wrap: wrap; margin-bottom: 1.25rem; }
+.ktab { padding: 8px 16px; border: 0.5px solid var(--border2); border-radius: var(--radius-pill); font-size: 13px; cursor: pointer; background: #fff; color: var(--text2); transition: all 0.15s; display: flex; align-items: center; gap: 7px; font-family: inherit; }
+.ktab:hover { border-color: var(--border3); color: var(--text); }
+.ktab.active { color: #fff; border-color: transparent; font-weight: 500; }
+.ktab-dot { width: 8px; height: 8px; border-radius: 50%; flex-shrink: 0; }
+
+/* KIT HEADER */
+.kit-header { background: #fff; border: 0.5px solid var(--border); border-radius: var(--radius-lg); padding: 1.25rem 1.5rem; margin-bottom: 1.25rem; border-left: 4px solid; }
+.kit-title { font-size: 19px; font-weight: 600; margin-bottom: 4px; }
+.kit-subtitle { font-size: 13px; color: var(--text2); line-height: 1.6; }
+
+/* LEVEL BAR */
+.level-bar { display: flex; align-items: center; gap: 8px; flex-wrap: wrap; margin-bottom: 1.25rem; }
+.level-label { font-size: 12px; color: var(--text3); }
+.lvl-btn { padding: 6px 16px; border: 0.5px solid var(--border2); border-radius: var(--radius-pill); font-size: 13px; cursor: pointer; background: transparent; color: var(--text2); transition: all 0.15s; font-family: inherit; }
+.lvl-btn:hover { border-color: var(--border3); color: var(--text); }
+.lvl-btn.active { font-weight: 600; }
+
+/* FILTERS */
+.filters { display: flex; gap: 10px; flex-wrap: wrap; margin-bottom: 1.25rem; align-items: center; }
+.filter-group { display: flex; align-items: center; gap: 6px; }
+.filter-label { font-size: 11px; color: var(--text3); text-transform: uppercase; letter-spacing: 0.05em; }
+.filter-select { padding: 5px 10px; border: 0.5px solid var(--border2); border-radius: var(--radius); font-size: 12px; background: #fff; color: var(--text); font-family: inherit; cursor: pointer; }
+.filter-select:focus { outline: none; border-color: var(--border3); }
+.results-count { font-size: 12px; color: var(--text3); margin-left: auto; }
+
+/* STATS */
+.stats-grid { display: grid; grid-template-columns: repeat(3, 1fr); gap: 10px; margin-bottom: 1.25rem; }
+.stat-card { background: var(--bg2); border-radius: var(--radius); padding: 0.875rem 1rem; }
+.stat-label { font-size: 11px; color: var(--text2); margin-bottom: 4px; text-transform: uppercase; letter-spacing: 0.04em; }
+.stat-val { font-size: 22px; font-weight: 600; }
+
+/* PROG */
+.prog-wrap { margin-bottom: 1.25rem; }
+.prog-title { font-size: 11px; color: var(--text3); text-transform: uppercase; letter-spacing: 0.06em; margin-bottom: 6px; }
+.prog-track { height: 5px; background: var(--bg3); border-radius: var(--radius-pill); overflow: hidden; }
+.prog-fill { height: 100%; border-radius: var(--radius-pill); transition: width 0.4s; }
+
+/* LEGEND */
+.legend { display: flex; flex-wrap: wrap; gap: 14px; padding: 0.75rem 1rem; background: var(--bg2); border-radius: var(--radius); margin-bottom: 1.5rem; }
+.legend-item { display: flex; align-items: center; gap: 7px; font-size: 12px; color: var(--text2); }
+.legend-dot { width: 8px; height: 8px; border-radius: 50%; }
+
+.section-title { font-size: 11px; font-weight: 600; color: var(--text3); text-transform: uppercase; letter-spacing: 0.07em; margin-bottom: 10px; }
+
+/* ACTIVITY CARDS */
+.activity-list { display: flex; flex-direction: column; gap: 8px; }
+.activity-card { background: #fff; border: 0.5px solid var(--border); border-radius: var(--radius-lg); overflow: hidden; transition: border-color 0.15s; cursor: pointer; }
+.activity-card:hover { border-color: var(--border2); }
+.activity-card.open { border-color: var(--border3); }
+.activity-header { display: flex; align-items: center; gap: 12px; padding: 1rem 1.25rem; }
+.activity-icon { width: 36px; height: 36px; border-radius: var(--radius); display: flex; align-items: center; justify-content: center; font-size: 17px; flex-shrink: 0; }
+.activity-meta { flex: 1; min-width: 0; }
+.activity-name { font-size: 14px; font-weight: 500; line-height: 1.35; }
+.activity-type { font-size: 12px; color: var(--text2); margin-top: 2px; }
+.activity-tags { display: flex; gap: 5px; flex-wrap: wrap; margin-top: 5px; }
+.tag { font-size: 11px; padding: 2px 9px; border-radius: var(--radius-pill); border: 0.5px solid var(--border2); color: var(--text2); }
+.chevron { font-size: 12px; color: var(--text3); transition: transform 0.2s; flex-shrink: 0; }
+.activity-card.open .chevron { transform: rotate(180deg); }
+.activity-body { display: none; padding: 1rem 1.25rem 1.25rem; border-top: 0.5px solid var(--border); }
+.activity-card.open .activity-body { display: block; }
+.body-section { margin-bottom: 12px; }
+.body-label { font-size: 11px; font-weight: 600; color: var(--text3); text-transform: uppercase; letter-spacing: 0.06em; margin-bottom: 5px; }
+.body-text { font-size: 13.5px; color: var(--text); line-height: 1.65; }
+.obj-list { list-style: none; padding: 0; }
+.obj-list li { font-size: 13.5px; color: var(--text); line-height: 1.6; padding-left: 16px; position: relative; margin-bottom: 2px; }
+.obj-list li::before { content: '→'; position: absolute; left: 0; color: var(--text3); font-size: 11px; top: 4px; }
+.mat-chips { display: flex; flex-wrap: wrap; gap: 6px; }
+.mat-chip { font-size: 12px; padding: 4px 11px; background: var(--bg2); border-radius: var(--radius-pill); color: var(--text); }
+
+.no-result { text-align: center; padding: 3rem 1rem; color: var(--text3); font-size: 14px; }
+
+/* SUIVI PAGE */
+.suivi-wrap { display: none; }
+.suivi-wrap.active { display: block; }
+.kits-wrap { display: block; }
+.kits-wrap.hidden { display: none; }
+
+.suivi-header { background: #fff; border: 0.5px solid var(--border); border-radius: var(--radius-lg); padding: 1.25rem 1.5rem; margin-bottom: 1.5rem; border-left: 4px solid var(--aurana); }
+.suivi-header h2 { font-size: 18px; font-weight: 600; margin-bottom: 4px; }
+.suivi-header p { font-size: 13px; color: var(--text2); }
+
+.suivi-form { background: #fff; border: 0.5px solid var(--border); border-radius: var(--radius-lg); padding: 1.25rem 1.5rem; margin-bottom: 1.25rem; }
+.suivi-form h3 { font-size: 14px; font-weight: 600; margin-bottom: 1rem; color: var(--text2); text-transform: uppercase; letter-spacing: 0.05em; font-size: 11px; }
+.form-grid { display: grid; grid-template-columns: 1fr 1fr; gap: 12px; }
+.form-field { display: flex; flex-direction: column; gap: 5px; }
+.form-field label { font-size: 12px; color: var(--text2); font-weight: 500; }
+.form-field input, .form-field select { padding: 8px 10px; border: 0.5px solid var(--border2); border-radius: var(--radius); font-family: inherit; font-size: 13px; background: var(--bg); color: var(--text); }
+.form-field input:focus, .form-field select:focus { outline: none; border-color: var(--aurana); }
+
+.suivi-table-wrap { background: #fff; border: 0.5px solid var(--border); border-radius: var(--radius-lg); padding: 1.25rem 1.5rem; margin-bottom: 1.25rem; overflow-x: auto; }
+.suivi-table-wrap h3 { font-size: 11px; font-weight: 600; color: var(--text3); text-transform: uppercase; letter-spacing: 0.06em; margin-bottom: 1rem; }
+.suivi-table { width: 100%; border-collapse: collapse; font-size: 13px; }
+.suivi-table th { text-align: left; padding: 8px 10px; background: var(--bg2); font-size: 11px; color: var(--text2); font-weight: 600; text-transform: uppercase; letter-spacing: 0.04em; border-bottom: 0.5px solid var(--border2); }
+.suivi-table td { padding: 10px; border-bottom: 0.5px solid var(--border); vertical-align: middle; }
+.suivi-table tr:last-child td { border-bottom: none; }
+.suivi-table tr:hover td { background: var(--bg2); }
+.check-cell { text-align: center; }
+.check-cell input[type=checkbox] { width: 16px; height: 16px; cursor: pointer; accent-color: var(--aurana); }
+.kit-badge { display: inline-block; padding: 2px 9px; border-radius: var(--radius-pill); font-size: 11px; font-weight: 500; }
+.lvl-badge { display: inline-block; padding: 2px 9px; border-radius: var(--radius-pill); font-size: 11px; }
+.obs-input { width: 100%; padding: 5px 8px; border: 0.5px solid var(--border2); border-radius: 6px; font-family: inherit; font-size: 12px; background: var(--bg); color: var(--text); }
+.obs-input:focus { outline: none; border-color: var(--aurana); }
+
+.suivi-actions { display: flex; gap: 10px; flex-wrap: wrap; margin-bottom: 1.5rem; }
+.btn { padding: 9px 18px; border-radius: var(--radius); font-size: 13px; cursor: pointer; font-family: inherit; font-weight: 500; transition: all 0.15s; border: 0.5px solid var(--border2); background: #fff; color: var(--text); }
+.btn:hover { background: var(--bg2); }
+.btn-primary { background: var(--aurana); color: #fff; border-color: var(--aurana); }
+.btn-primary:hover { background: var(--aurana-dark); border-color: var(--aurana-dark); }
+
+.progress-summary { background: var(--bg2); border-radius: var(--radius); padding: 1rem 1.25rem; margin-bottom: 1.25rem; display: flex; gap: 2rem; flex-wrap: wrap; }
+.prog-item { display: flex; flex-direction: column; gap: 2px; }
+.prog-item-label { font-size: 11px; color: var(--text3); text-transform: uppercase; letter-spacing: 0.04em; }
+.prog-item-val { font-size: 20px; font-weight: 600; }
+
+/* FOOTER */
+footer { text-align: center; padding: 1.5rem 2rem; font-size: 12px; color: var(--text3); border-top: 0.5px solid var(--border); margin-top: 2rem; line-height: 1.8; }
+footer strong { color: var(--aurana-dark); font-weight: 600; }
+
+@media print {
+  header, .nav-tabs, .kit-tabs, .level-bar, .filters, .suivi-actions, .kits-wrap { display: none !important; }
+  .suivi-wrap { display: block !important; }
+  body { background: white; }
+  .obs-input { border: 0.5px solid #ccc; }
+}
+@media (max-width: 600px) {
+  .main { padding: 1rem 1rem 3rem; }
+  .stats-grid { grid-template-columns: 1fr 1fr; }
+  .form-grid { grid-template-columns: 1fr; }
+  header { padding: 0.875rem 1rem; }
+  .nav-tab span { display: none; }
+}
+</style>
+</head>
+<body>
+
+<header>
+  <div class="header-left">
+    <div class="logo-badge">AL</div>
+    <div class="header-text">
+      <h1>Kit Pédagogique</h1>
+      <p>Aurélie Louisin</p>
+    </div>
+  </div>
+  <div class="nav-tabs">
+    <button class="nav-tab active" onclick="showPage('kits')">📚 <span>Activités</span></button>
+    <button class="nav-tab" onclick="showPage('suivi')">📋 <span>Suivi apprenant</span></button>
+  </div>
+</header>
+
+<main class="main">
+
+  <!-- KITS PAGE -->
+  <div class="kits-wrap" id="kits-page">
+
+    <div class="kit-tabs" id="kit-tabs"></div>
+
+    <div id="kit-header-zone"></div>
+
+    <div class="level-bar">
+      <span class="level-label">Niveau :</span>
+      <div id="level-btns"></div>
+    </div>
+
+    <div class="filters">
+      <div class="filter-group">
+        <span class="filter-label">Durée</span>
+        <select class="filter-select" id="filter-duree" onchange="applyFilters()">
+          <option value="">Toutes</option>
+          <option value="courte">≤ 45 min</option>
+          <option value="moyenne">60–75 min</option>
+          <option value="longue">≥ 90 min</option>
+        </select>
+      </div>
+      <div class="filter-group">
+        <span class="filter-label">Type</span>
+        <select class="filter-select" id="filter-type" onchange="applyFilters()">
+          <option value="">Tous</option>
+          <option value="oral">Oral / phonologie</option>
+          <option value="ecrit">Écrit / lecture</option>
+          <option value="numerique">Numérique</option>
+          <option value="manipulation">Manipulation</option>
+          <option value="reflexivite">Réflexivité</option>
+        </select>
+      </div>
+      <span class="results-count" id="results-count"></span>
+    </div>
+
+    <div class="stats-grid" id="stats-zone"></div>
+
+    <div class="prog-wrap">
+      <div class="prog-title">Progression dans le kit</div>
+      <div class="prog-track"><div class="prog-fill" id="prog-fill"></div></div>
+    </div>
+
+    <div class="legend">
+      <span class="legend-item"><span class="legend-dot" style="background:#D85A30"></span>Infra — sans prérequis</span>
+      <span class="legend-item"><span class="legend-dot" style="background:#185FA5"></span>A1 — bases acquises</span>
+      <span class="legend-item"><span class="legend-dot" style="background:#3B6D11"></span>A2 — en développement</span>
+    </div>
+
+    <div class="section-title" id="activities-title"></div>
+    <div class="activity-list" id="activity-list"></div>
+
+  </div>
+
+  <!-- SUIVI PAGE -->
+  <div class="suivi-wrap" id="suivi-page">
+
+    <div class="suivi-header">
+      <h2>📋 Fiche de suivi apprenant</h2>
+      <p>Renseignez les informations de l'apprenant et cochez les activités réalisées au fil des séances.</p>
+    </div>
+
+    <div class="suivi-form">
+      <h3>Informations apprenant</h3>
+      <div class="form-grid">
+        <div class="form-field"><label>Prénom et nom</label><input type="text" id="s-nom" placeholder="Ex : Marie D."></div>
+        <div class="form-field"><label>Date d'entrée en formation</label><input type="date" id="s-date"></div>
+        <div class="form-field"><label>Kit principal suivi</label>
+          <select id="s-kit">
+            <option value="">-- Choisir --</option>
+            <option>Illettrisme</option>
+            <option>Illectronisme</option>
+            <option>Innumérisme</option>
+            <option>Mixte</option>
+          </select>
+        </div>
+        <div class="form-field"><label>Niveau initial</label>
+          <select id="s-niveau">
+            <option value="">-- Choisir --</option>
+            <option>Infra</option>
+            <option>A1</option>
+            <option>A2</option>
+          </select>
+        </div>
+        <div class="form-field"><label>Formateur / formatrice</label><input type="text" id="s-formateur" value="Aurélie Louisin"></div>
+        <div class="form-field"><label>Structure d'accueil</label><input type="text" id="s-structure" placeholder="Ex : AMAFAR EPE"></div>
+      </div>
+    </div>
+
+    <div class="progress-summary" id="suivi-progress">
+      <div class="prog-item"><div class="prog-item-label">Activités cochées</div><div class="prog-item-val" id="nb-checked">0</div></div>
+      <div class="prog-item"><div class="prog-item-label">Total activités</div><div class="prog-item-val">27</div></div>
+      <div class="prog-item"><div class="prog-item-label">Avancement</div><div class="prog-item-val" id="pct-checked">0%</div></div>
+    </div>
+
+    <div class="suivi-table-wrap">
+      <h3>Activités réalisées</h3>
+      <table class="suivi-table">
+        <thead>
+          <tr>
+            <th style="width:40px">✓</th>
+            <th>Activité</th>
+            <th style="width:100px">Kit</th>
+            <th style="width:70px">Niveau</th>
+            <th style="width:70px">Durée</th>
+            <th style="width:180px">Observations</th>
+          </tr>
+        </thead>
+        <tbody id="suivi-tbody"></tbody>
+      </table>
+    </div>
+
+    <div class="suivi-actions">
+      <button class="btn btn-primary" onclick="window.print()">🖨️ Imprimer / Exporter PDF</button>
+      <button class="btn" onclick="resetSuivi()">🔄 Réinitialiser</button>
+    </div>
+
+  </div>
+
+</main>
+
+<footer>
+  <strong>Aurélie Louisin</strong><br>
+  Kit pédagogique — Illettrisme · Illectronisme · Innumérisme<br>
+  <span style="font-size:11px">Conçu avec l'assistance de l'IA Claude (Anthropic) · La Réunion</span>
+</footer>
+
+<script>
+const KITS = {
+  illettrisme: {
+    label: "Illettrisme", icon: "📖",
+    color: "#7F77DD", headerColor: "#534AB7", tabBg: "#534AB7",
+    desc: "Pour des adultes ayant été scolarisés en France mais ayant perdu ou jamais maîtrisé les compétences de base en lecture, écriture et calcul.",
+    activities: {
+      infra: [
+        { name: "Reconnaissance des sons de la vie quotidienne", type: "Activité orale / phonologie", typeKey: "oral",
+          obj: ["Discriminer des sons familiers", "Associer un son à une image", "Développer l'écoute active"],
+          desc: "L'apprenant écoute des sons enregistrés (klaxon, téléphone, eau…) et les associe à des images ou situations de vie réelle. Travail en binôme puis mise en commun.",
+          materiel: ["Enregistrements audio", "Fiches images A4 plastifiées", "Tableau de correspondance"], duree: "45 min", diff: "Infra" },
+        { name: "Mon prénom, mon identité", type: "Entrée graphique / tracé", typeKey: "ecrit",
+          obj: ["Reconnaître les lettres de son prénom", "Reproduire son prénom par tracé guidé", "Valoriser l'identité de l'apprenant"],
+          desc: "À partir de son prénom, l'apprenant le reconnaît parmi d'autres, le trace sur lignes Seyes, puis l'identifie sur des documents administratifs réels.",
+          materiel: ["Cahier à lignes Seyes", "Crayons de couleur", "Documents authentiques anonymisés"], duree: "60 min", diff: "Infra" },
+        { name: "Le calendrier de ma semaine", type: "Repérage temporel / oral", typeKey: "oral",
+          obj: ["Nommer les jours de la semaine", "Se repérer dans le temps proche", "Lire un planning simple"],
+          desc: "Construction collective d'un emploi du temps illustré. Chaque apprenant place des pictogrammes représentant ses activités sur un calendrier hebdomadaire grand format.",
+          materiel: ["Calendrier mural grand format", "Pictogrammes plastifiés", "Post-its"], duree: "45 min", diff: "Infra" }
+      ],
+      a1: [
+        { name: "Lire une affiche de la vie quotidienne", type: "Lecture fonctionnelle", typeKey: "ecrit",
+          obj: ["Identifier les informations essentielles d'un document visuel", "Repérer les mots-clés", "Relier texte et image"],
+          desc: "À partir d'affiches authentiques (pharmacie, bus, cantine), les apprenants repèrent les informations utiles en répondant à des questions guidées (Qui ? Quoi ? Où ? Quand ?).",
+          materiel: ["Affiches authentiques plastifiées", "Fiche de lecture guidée", "Surligneur"], duree: "60 min", diff: "A1" },
+        { name: "Remplir une fiche de renseignements", type: "Écriture fonctionnelle", typeKey: "ecrit",
+          obj: ["Écrire ses informations personnelles", "Identifier les rubriques d'un formulaire", "Maîtriser majuscules/minuscules"],
+          desc: "Entraînement progressif : d'abord relier les rubriques aux informations, puis compléter une fiche à moitié remplie, puis remplir seul une fiche vierge.",
+          materiel: ["3 fiches de progression", "Modèle identité à disposition", "Stylo bleu"], duree: "75 min", diff: "A1" },
+        { name: "Le message simple : courrier, SMS, note", type: "Production écrite guidée", typeKey: "ecrit",
+          obj: ["Comprendre un message court", "Produire un écrit de 2 à 3 phrases", "Utiliser les formules de base"],
+          desc: "Lecture de 3 courts messages (SMS, note laissée, petit mot). Puis production guidée à partir d'une situation déclenchante : laisser un message à un voisin.",
+          materiel: ["Cartes messages authentiques", "Cadre d'écriture guidé", "Dictionnaire illustré"], duree: "60 min", diff: "A1" }
+      ],
+      a2: [
+        { name: "Comprendre un mode d'emploi simple", type: "Lecture / compréhension écrite", typeKey: "ecrit",
+          obj: ["Lire un texte informatif court", "Suivre des instructions séquentielles", "Repérer les connecteurs logiques"],
+          desc: "À partir de modes d'emploi simplifiés (micro-onde, machine à laver), les apprenants reconstituent les étapes, identifient les mots de liaison, et rédigent un mode d'emploi simplifié.",
+          materiel: ["Modes d'emploi simplifiés", "Fiche de réorganisation", "Connecteurs découpés"], duree: "75 min", diff: "A2" },
+        { name: "Écrire une demande simple", type: "Production écrite autonome", typeKey: "ecrit",
+          obj: ["Structurer un écrit en paragraphes", "Adapter le registre de langue", "Utiliser les formules épistolaires de base"],
+          desc: "Simulation d'une demande écrite (congé, rendez-vous médecin, inscription école). Travail sur la structure : objet, corps, formule de politesse. Révision par pairs.",
+          materiel: ["Corpus de lettres types", "Grille de relecture par pairs", "Cadre de production"], duree: "90 min", diff: "A2" },
+        { name: "Le journal de bord de mes apprentissages", type: "Réflexivité / portfolio", typeKey: "reflexivite",
+          obj: ["Prendre conscience de ses progrès", "Développer l'autonomie scripturale", "Ancrer les acquis"],
+          desc: "Chaque apprenant tient un journal de bord illustré. Séance de bilan : relecture collective, mise en mots des difficultés et réussites, projet personnel.",
+          materiel: ["Cahier personnalisé", "Fiches bilan", "Photos ou dessins de l'apprenant"], duree: "60 min", diff: "A2" }
+      ]
+    }
+  },
+  illectronisme: {
+    label: "Illectronisme", icon: "💻",
+    color: "#378ADD", headerColor: "#185FA5", tabBg: "#185FA5",
+    desc: "Pour des adultes en difficulté avec les outils numériques (smartphone, ordinateur, internet), afin de favoriser l'inclusion numérique et l'autonomie dans les démarches en ligne.",
+    activities: {
+      infra: [
+        { name: "Je découvre le smartphone", type: "Manipulation guidée / découverte", typeKey: "manipulation",
+          obj: ["Nommer les parties d'un téléphone", "Allumer / éteindre / déverrouiller", "Passer et recevoir un appel"],
+          desc: "Atelier de découverte sensorielle et progressive. Les apprenants explorent un vrai téléphone. Mise en situation : appeler un numéro affiché au tableau.",
+          materiel: ["Smartphones (1 pour 2)", "Fiche visuelle annotée", "Numéros fictifs à appeler"], duree: "60 min", diff: "Infra" },
+        { name: "Reconnaître les pictogrammes du quotidien numérique", type: "Reconnaissance visuelle", typeKey: "manipulation",
+          obj: ["Identifier les icônes courantes (téléphone, message, Wi-Fi, batterie)", "Associer icône et fonction", "Mémoriser les symboles essentiels"],
+          desc: "Jeu de Memory avec les icônes numériques les plus fréquentes. Puis association collective sur grand format. Trace écrite illustrée à coller dans le cahier.",
+          materiel: ["Cartes Memory plastifiées", "Planches A3 icônes", "Cahier", "Colles"], duree: "45 min", diff: "Infra" },
+        { name: "Écrire avec le clavier de son téléphone", type: "Saisie / motricité fine", typeKey: "numerique",
+          obj: ["Localiser les lettres sur le clavier tactile", "Saisir son prénom par SMS", "Corriger une erreur de frappe"],
+          desc: "Dictée progressive : d'abord son prénom, puis un mot simple, puis une phrase de 5 mots. Travail sur la correction automatique.",
+          materiel: ["Smartphones ou tablettes", "Liste de mots simples", "Fiche aide-mémoire clavier"], duree: "60 min", diff: "Infra" }
+      ],
+      a1: [
+        { name: "Naviguer sur un site simple", type: "Navigation web guidée", typeKey: "numerique",
+          obj: ["Ouvrir un navigateur", "Saisir une adresse URL", "Identifier les zones cliquables d'une page"],
+          desc: "À partir d'un site public simple (CAF, Pôle emploi simplifié), les apprenants naviguent selon un parcours balisé avec des repères visuels.",
+          materiel: ["Ordinateurs ou tablettes", "Fiche parcours balisé", "Capture d'écran annotée"], duree: "75 min", diff: "A1" },
+        { name: "Envoyer un message électronique simple", type: "Production numérique", typeKey: "numerique",
+          obj: ["Comprendre les champs d'un e-mail (À, Objet, Corps)", "Rédiger un message court", "Envoyer et recevoir un accusé"],
+          desc: "Simulation d'envoi de mail entre apprenants. Puis simulation vers un 'organisme' (formateur joue le rôle). Découverte des pièces jointes.",
+          materiel: ["Comptes email pédagogiques", "Fiche pas à pas illustrée", "Scénario d'envoi"], duree: "90 min", diff: "A1" },
+        { name: "Reconnaître et éviter les arnaques en ligne", type: "Éducation critique / sécurité", typeKey: "numerique",
+          obj: ["Identifier les indices d'un message frauduleux", "Savoir ne pas cliquer sans vérifier", "Connaître les réflexes de sécurité de base"],
+          desc: "Étude de 4 exemples de phishing anonymisés. Comparaison avec des messages légitimes. Construction d'une affiche collective '5 réflexes anti-arnaque'.",
+          materiel: ["Exemples arnaques plastifiés", "Exemples légitimes", "Affiche vierge + marqueurs"], duree: "60 min", diff: "A1" }
+      ],
+      a2: [
+        { name: "Faire une démarche administrative en ligne", type: "Simulation de démarche", typeKey: "numerique",
+          obj: ["Accéder à un espace personnel (France Connect)", "Télécharger un document officiel", "Imprimer ou enregistrer un justificatif"],
+          desc: "Simulation pas à pas d'une démarche réelle : demande d'attestation CAF ou ameli. Utilisation d'un compte de test.",
+          materiel: ["Comptes test en ligne", "Fiche pas à pas", "Imprimante disponible"], duree: "90 min", diff: "A2" },
+        { name: "Rechercher une information fiable sur internet", type: "Recherche documentaire / esprit critique", typeKey: "numerique",
+          obj: ["Formuler une requête pertinente", "Évaluer la fiabilité d'une source", "Différencier publicité et résultat de recherche"],
+          desc: "Atelier de recherche guidée autour de questions du quotidien. Débriefing collectif sur les stratégies et les sources trouvées.",
+          materiel: ["Ordinateurs/tablettes", "Grille d'évaluation source", "Questions-déclenchantes"], duree: "75 min", diff: "A2" },
+        { name: "Créer et gérer son espace numérique personnel", type: "Autonomisation numérique", typeKey: "numerique",
+          obj: ["Créer une adresse email personnelle", "Gérer un mot de passe sécurisé", "Organiser ses documents numériques"],
+          desc: "Accompagnement individuel à la création d'une boîte mail personnelle. Travail sur la mémorisation sécurisée du mot de passe et le classement des documents.",
+          materiel: ["Ordinateurs", "Fiche création compte étape par étape", "Carnet de bord numérique"], duree: "120 min", diff: "A2" }
+      ]
+    }
+  },
+  innumerisme: {
+    label: "Innumérisme", icon: "🔢",
+    color: "#1D9E75", headerColor: "#0F6E56", tabBg: "#0F6E56",
+    desc: "Pour des adultes en difficulté avec les nombres, le calcul, la mesure et le raisonnement mathématique dans la vie quotidienne et professionnelle.",
+    activities: {
+      infra: [
+        { name: "Compter les objets du quotidien", type: "Numération / manipulation", typeKey: "manipulation",
+          obj: ["Dénombrer jusqu'à 20", "Associer nombre, quantité et écriture chiffrée", "Manipuler des objets concrets"],
+          desc: "À partir d'objets du quotidien (boutons, jetons, pièces), les apprenants comptent, groupent et associent la quantité à la carte-nombre correspondante.",
+          materiel: ["Objets manipulables variés", "Cartes-nombres 1 à 20", "Plateaux de tri"], duree: "45 min", diff: "Infra" },
+        { name: "Reconnaître les billets et les pièces", type: "Numération / vie quotidienne", typeKey: "manipulation",
+          obj: ["Identifier les billets (5€, 10€, 20€, 50€)", "Reconnaître les pièces courantes", "Associer valeur et utilité"],
+          desc: "Manipulation de faux billets et pièces. Tri, classement par valeur, jeu de 'faire la monnaie' sur une transaction simple (boulangerie simulée).",
+          materiel: ["Faux billets et pièces pédagogiques", "Étiquettes prix", "Décor boulangerie simulée"], duree: "60 min", diff: "Infra" },
+        { name: "Plus grand, plus petit : comparer des quantités", type: "Comparaison / raisonnement", typeKey: "manipulation",
+          obj: ["Utiliser les termes plus / moins / autant", "Comparer deux quantités visuellement", "Introduire les signes < et >"],
+          desc: "Comparaisons visuelles progressives. Introduction ludique des signes > et < avec la métaphore du crocodile qui mange le plus grand nombre.",
+          materiel: ["Cartes quantités", "Cartes signes plastifiées", "Figurines crocodile"], duree: "45 min", diff: "Infra" }
+      ],
+      a1: [
+        { name: "Lire et écrire les nombres jusqu'à 1 000", type: "Numération écrite", typeKey: "ecrit",
+          obj: ["Écrire en chiffres et en lettres", "Décomposer centaines/dizaines/unités", "Lire des prix courants"],
+          desc: "Progression : lire des prix sur des étiquettes réelles, décomposer le tableau de numération, écrire des chèques fictifs.",
+          materiel: ["Étiquettes prix authentiques", "Tableau de numération", "Chèques fictifs"], duree: "60 min", diff: "A1" },
+        { name: "Gérer un budget courses simple", type: "Calcul / vie quotidienne", typeKey: "manipulation",
+          obj: ["Additionner des prix", "Vérifier un ticket de caisse", "Calculer une monnaie à rendre"],
+          desc: "Simulation de courses avec tickets de caisse fabriqués. Les apprenants vérifient le total, identifient les erreurs, calculent la monnaie.",
+          materiel: ["Tickets de caisse fictifs", "Calculatrice", "Faux billets", "Liste de courses"], duree: "75 min", diff: "A1" },
+        { name: "Lire l'heure et se repérer dans le temps", type: "Mesure du temps", typeKey: "manipulation",
+          obj: ["Lire une horloge analogique et numérique", "Calculer une durée simple", "Lire un planning ou programme"],
+          desc: "À partir d'horloges manipulables et de programmes TV / transport, les apprenants lisent l'heure, calculent des durées et identifient des horaires de rendez-vous.",
+          materiel: ["Horloges manipulables", "Programme TV / horaires bus", "Fiche calcul durée"], duree: "60 min", diff: "A1" }
+      ],
+      a2: [
+        { name: "Comprendre une fiche de paie", type: "Lecture numérique / vie professionnelle", typeKey: "ecrit",
+          obj: ["Identifier les rubriques d'une fiche de paie", "Comprendre brut / net / cotisations", "Calculer un pourcentage simple"],
+          desc: "Analyse guidée d'une fiche de paie simplifiée et anonymisée. Calcul des pourcentages de cotisations. Mise en perspective avec le budget mensuel.",
+          materiel: ["Fiche de paie simplifiée anonymisée", "Calculatrice", "Tableau budget mensuel"], duree: "90 min", diff: "A2" },
+        { name: "Calculer des surfaces et des volumes simples", type: "Géométrie pratique", typeKey: "manipulation",
+          obj: ["Mesurer avec un mètre ruban", "Calculer la surface d'une pièce rectangulaire", "Estimer une quantité de matériau"],
+          desc: "Mise en situation : repeindre une pièce ou poser du parquet. Les apprenants mesurent, calculent la surface, puis estiment la quantité de matériau nécessaire.",
+          materiel: ["Mètre ruban", "Plans de pièces", "Catalogue prix matériaux", "Calculatrice"], duree: "90 min", diff: "A2" },
+        { name: "Lire et construire un tableau et un graphique", type: "Statistiques / lecture de données", typeKey: "ecrit",
+          obj: ["Lire un tableau à double entrée", "Comprendre un graphique à barres", "Extraire une information clé"],
+          desc: "À partir de données réelles (météo, prix, résultats sportifs), les apprenants lisent des tableaux et graphiques, puis construisent leur propre graphique simple.",
+          materiel: ["Tableaux et graphiques authentiques", "Papier quadrillé", "Règle, crayon de couleur"], duree: "75 min", diff: "A2" }
+      ]
+    }
+  }
+};
+
+const LEVELS = ["infra", "a1", "a2"];
+const LEVEL_LABELS = { infra: "Infra", a1: "A1", a2: "A2" };
+const LEVEL_COLORS = { infra: "#D85A30", a1: "#185FA5", a2: "#3B6D11" };
+const DIFF_COLORS = { "Infra": "#D85A30", "A1": "#185FA5", "A2": "#3B6D11" };
+const TYPE_KEYS = { oral: "Oral", ecrit: "Écrit", numerique: "Numérique", manipulation: "Manipulation", reflexivite: "Réflexivité" };
+
+let activeKit = "illettrisme";
+let activeLevel = "infra";
+let openCards = {};
+
+function getDureeKey(str) {
+  const n = parseInt(str);
+  if (n <= 45) return "courte";
+  if (n <= 75) return "moyenne";
+  return "longue";
+}
+
+function applyFilters() {
+  const fd = document.getElementById("filter-duree").value;
+  const ft = document.getElementById("filter-type").value;
+  const kit = KITS[activeKit];
+  const all = kit.activities[activeLevel];
+  const filtered = all.filter(a => {
+    if (fd && getDureeKey(a.duree) !== fd) return false;
+    if (ft && a.typeKey !== ft) return false;
+    return true;
+  });
+  document.getElementById("results-count").textContent = filtered.length + " activité" + (filtered.length > 1 ? "s" : "");
+  renderActivities(filtered, kit);
+}
+
+function renderActivities(activities, kit) {
+  const list = document.getElementById("activity-list");
+  if (!activities.length) {
+    list.innerHTML = `<div class="no-result">Aucune activité ne correspond à ces filtres.</div>`;
+    return;
+  }
+  list.innerHTML = activities.map((a, i) => {
+    const id = `${activeKit}-${activeLevel}-${i}`;
+    const isOpen = openCards[id];
+    return `
+    <div class="activity-card ${isOpen ? 'open' : ''}" onclick="toggleCard('${id}')">
+      <div class="activity-header">
+        <div class="activity-icon" style="background:${kit.color}18">${kit.icon}</div>
+        <div class="activity-meta">
+          <div class="activity-name">${a.name}</div>
+          <div class="activity-type">${a.type}</div>
+          <div class="activity-tags">
+            <span class="tag" style="border-color:${DIFF_COLORS[a.diff]}55;color:${DIFF_COLORS[a.diff]}">${a.diff}</span>
+            <span class="tag">⏱ ${a.duree}</span>
+            <span class="tag">${TYPE_KEYS[a.typeKey] || ''}</span>
+          </div>
+        </div>
+        <span class="chevron">▼</span>
+      </div>
+      ${isOpen ? `
+      <div class="activity-body">
+        <div class="body-section">
+          <div class="body-label">Description</div>
+          <div class="body-text">${a.desc}</div>
+        </div>
+        <div class="body-section">
+          <div class="body-label">Objectifs</div>
+          <ul class="obj-list">${a.obj.map(o => `<li>${o}</li>`).join("")}</ul>
+        </div>
+        <div class="body-section">
+          <div class="body-label">Matériel</div>
+          <div class="mat-chips">${a.materiel.map(m => `<span class="mat-chip">${m}</span>`).join("")}</div>
+        </div>
+      </div>` : ''}
+    </div>`;
+  }).join("");
+}
+
+function renderKits() {
+  const kit = KITS[activeKit];
+  const activities = kit.activities[activeLevel];
+
+  document.getElementById("kit-tabs").innerHTML = Object.entries(KITS).map(([k, v]) => `
+    <button class="ktab ${k === activeKit ? 'active' : ''}"
+      style="${k === activeKit ? `background:${v.tabBg};border-color:${v.tabBg}` : ''}"
+      onclick="selectKit('${k}')">
+      <span class="ktab-dot" style="background:${k === activeKit ? 'rgba(255,255,255,0.6)' : v.color}"></span>
+      ${v.icon} ${v.label}
+    </button>
+  `).join("");
+
+  document.getElementById("kit-header-zone").innerHTML = `
+    <div class="kit-header" style="border-left-color:${kit.headerColor}">
+      <div class="kit-title" style="color:${kit.headerColor}">${kit.icon} ${kit.label}</div>
+      <div class="kit-subtitle">${kit.desc}</div>
+    </div>`;
+
+  document.getElementById("level-btns").innerHTML = LEVELS.map(l => `
+    <button class="lvl-btn ${l === activeLevel ? 'active' : ''}"
+      style="${l === activeLevel ? `background:${LEVEL_COLORS[l]}18;border-color:${LEVEL_COLORS[l]};color:${LEVEL_COLORS[l]}` : ''}"
+      onclick="selectLevel('${l}')">${LEVEL_LABELS[l]}</button>
+  `).join("");
+
+  const totalMin = activities.reduce((s, a) => s + parseInt(a.duree), 0);
+  document.getElementById("stats-zone").innerHTML = `
+    <div class="stat-card"><div class="stat-label">Activités</div><div class="stat-val" style="color:${kit.headerColor}">${activities.length}</div></div>
+    <div class="stat-card"><div class="stat-label">Durée totale</div><div class="stat-val">${totalMin} min</div></div>
+    <div class="stat-card"><div class="stat-label">Niveau</div><div class="stat-val" style="color:${LEVEL_COLORS[activeLevel]}">${LEVEL_LABELS[activeLevel]}</div></div>
+  `;
+
+  const pct = LEVELS.indexOf(activeLevel) === 0 ? 33 : LEVELS.indexOf(activeLevel) === 1 ? 66 : 100;
+  document.getElementById("prog-fill").style.cssText = `width:${pct}%;background:${kit.color}`;
+  document.getElementById("activities-title").textContent = `Activités — niveau ${LEVEL_LABELS[activeLevel]}`;
+
+  document.getElementById("filter-duree").value = "";
+  document.getElementById("filter-type").value = "";
+  document.getElementById("results-count").textContent = activities.length + " activités";
+
+  renderActivities(activities, kit);
+}
+
+function renderSuivi() {
+  const tbody = document.getElementById("suivi-tbody");
+  const KIT_COLORS = { illettrisme: { bg: "#534AB720", color: "#534AB7" }, illectronisme: { bg: "#185FA520", color: "#185FA5" }, innumerisme: { bg: "#0F6E5620", color: "#0F6E56" } };
+  let rows = "";
+  Object.entries(KITS).forEach(([k, kit]) => {
+    LEVELS.forEach(l => {
+      kit.activities[l].forEach((a, i) => {
+        const id = `check-${k}-${l}-${i}`;
+        const kc = KIT_COLORS[k];
+        rows += `
+          <tr>
+            <td class="check-cell"><input type="checkbox" id="${id}" onchange="updateProgress()"></td>
+            <td style="font-size:13px;font-weight:500">${a.name}</td>
+            <td><span class="kit-badge" style="background:${kc.bg};color:${kc.color}">${kit.icon} ${kit.label}</span></td>
+            <td><span class="lvl-badge" style="background:${LEVEL_COLORS[l]}18;color:${LEVEL_COLORS[l]}">${LEVEL_LABELS[l]}</span></td>
+            <td style="font-size:12px;color:var(--text2)">${a.duree}</td>
+            <td><input class="obs-input" type="text" placeholder="Notes…"></td>
+          </tr>`;
+      });
+    });
+  });
+  tbody.innerHTML = rows;
+}
+
+function updateProgress() {
+  const boxes = document.querySelectorAll('#suivi-tbody input[type=checkbox]');
+  const checked = [...boxes].filter(b => b.checked).length;
+  document.getElementById("nb-checked").textContent = checked;
+  document.getElementById("pct-checked").textContent = Math.round(checked / 27 * 100) + "%";
+}
+
+function resetSuivi() {
+  if (!confirm("Réinitialiser toutes les cases cochées ?")) return;
+  document.querySelectorAll('#suivi-tbody input[type=checkbox]').forEach(b => b.checked = false);
+  document.querySelectorAll('.obs-input').forEach(i => i.value = "");
+  updateProgress();
+}
+
+function selectKit(k) { activeKit = k; openCards = {}; renderKits(); }
+function selectLevel(l) { activeLevel = l; openCards = {}; renderKits(); }
+function toggleCard(id) { openCards[id] = !openCards[id]; renderKits(); }
+
+function showPage(page) {
+  document.querySelectorAll('.nav-tab').forEach(t => t.classList.remove('active'));
+  event.target.closest('.nav-tab').classList.add('active');
+  if (page === 'kits') {
+    document.getElementById('kits-page').style.display = 'block';
+    document.getElementById('suivi-page').style.display = 'none';
+  } else {
+    document.getElementById('kits-page').style.display = 'none';
+    document.getElementById('suivi-page').style.display = 'block';
+  }
+}
+
+renderKits();
+renderSuivi();
+</script>
+</body>
+</html>
